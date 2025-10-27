@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloomsday - Coming Soon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f5dc 0%, #e8f5e9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #2d5016;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            text-shadow: 0 4px 20px rgba(45, 80, 22, 0.15);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 4px 20px rgba(45, 80, 22, 0.15);
+            }
+            50% {
+                text-shadow: 0 4px 40px rgba(76, 175, 80, 0.3);
+            }
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: #3d6b2f;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #4caf50;
+        }
+
+        .checkbox-label {
+            color: #555;
+            font-size: 0.95rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            background: #4caf50;
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            color: #5a7a4a;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 640px) {
+            .logo {
+                font-size: 3rem;
+            }
+
+            .tagline {
+                font-size: 1.1rem;
+            }
+
+            .form-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="logo">Bloomsday</h1>
+        <p class="tagline">We're working on tools to solve everyday legal problems, and the lawyers dedicating themselves to them.  Sign up to see what we're building.</p>
+        
+        <div class="form-container">
+            <h2 class="form-title">Stay Updated</h2>
+            <form id="signupForm">
+                <div id="emailSection">
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="invite" name="invite">
+                        <label for="invite" class="checkbox-label">Add me to the early access invite list</label>
+                    </div>
+                    
+                    <button type="button" id="continueBtn">Continue</button>
+                </div>
+
+                <div id="additionalInfo" class="additional-info">
+                    <button type="button" class="back-button" id="backBtn">← Back</button>
+                    
+                    <div class="input-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your full name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" placeholder="Your job title" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="company">Firm or Company Name</label>
+                        <input type="text" id="company" name="company" placeholder="Company name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="companyUrl">Company URL</label>
+                        <input type="url" id="companyUrl" name="companyUrl" placeholder="https://example.com" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="state">State</label>
+                        <select id="state" name="state" required>
+                            <option value="">Select a state</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit">Join the Waitlist</button>
+                </div>
+                
+                <div class="success-message" id="successMessage">
+                    🎉 Thanks for signing up! We'll be in touch soon.
+                </div>
+            </form>
+        </div>
+        
+        <div class="copyright">
+            © 2025 Bloomsday Co. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('signupForm');
+        const successMessage = document.getElementById('successMessage');
+        const emailInput = document.getElementById('email');
+        const inviteCheckbox = document.getElementById('invite');
+        const continueBtn = document.getElementById('continueBtn');
+        const backBtn = document.getElementById('backBtn');
+        const emailSection = document.getElementById('emailSection');
+        const additionalInfo = document.getElementById('additionalInfo');
+
+        continueBtn.addEventListener('click', function() {
+            if (emailInput.validity.valid) {
+                emailSection.style.display = 'none';
+                additionalInfo.classList.add('show');
+            } else {
+                emailInput.reportValidity();
+            }
+        });
+
+        backBtn.addEventListener('click', function() {
+            additionalInfo.classList.remove('show');
+            emailSection.style.display = 'block';
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value;
+            const wantsInvite = inviteCheckbox.checked;
+            const name = document.getElementById('name').value;
+            const title = document.getElementById('title').value;
+            const company = document.getElementById('company').value;
+            const companyUrl = document.getElementById('companyUrl').value;
+            const state = document.getElementById('state').value;
+            
+            // Create mailto link with all form data
+            const subject = encodeURIComponent('Waitlist Signup');
+            const body = encodeURIComponent(
+                `Email: ${email}\n` +
+                `Name: ${name}\n` +
+                `Title: ${title}\n` +
+                `Company: ${company}\n` +
+                `Company URL: ${companyUrl}\n` +
+                `State: ${state}\n` +
+                `Early Access Invite List: ${wantsInvite ? 'Yes' : 'No'}`
+            );
+            
+            window.location.href = `mailto:inquiries@bloomsday.co?subject=${subject}&body=${body}`;
+            
+            // Show success message
+            additionalInfo.classList.remove('show');
+            successMessage.classList.add('show');
+            
+            // Reset form
+            form.reset();
+            emailSection.style.display = 'block';
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
