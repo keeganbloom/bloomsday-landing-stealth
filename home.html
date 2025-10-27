@@ -83,6 +83,8 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: slideIn 1s ease-out 0.5s both;
+            position: relative;
+            min-height: 400px;
         }
 
         @keyframes slideIn {
@@ -356,11 +358,17 @@
         const backBtn = document.getElementById('backBtn');
         const emailSection = document.getElementById('emailSection');
         const additionalInfo = document.getElementById('additionalInfo');
+        const emailDisplay = document.getElementById('emailDisplay');
 
         continueBtn.addEventListener('click', function() {
             if (emailInput.validity.valid) {
-                emailSection.style.display = 'none';
-                additionalInfo.classList.add('show');
+                emailSection.classList.add('hidden');
+                // Wait for fade out animation before showing next section
+                setTimeout(() => {
+                    emailSection.style.display = 'none';
+                    emailDisplay.value = emailInput.value;
+                    additionalInfo.classList.add('show');
+                }, 400);
             } else {
                 emailInput.reportValidity();
             }
@@ -368,7 +376,12 @@
 
         backBtn.addEventListener('click', function() {
             additionalInfo.classList.remove('show');
-            emailSection.style.display = 'block';
+            // Wait for fade out before showing email section
+            setTimeout(() => {
+                additionalInfo.style.display = 'none';
+                emailSection.style.display = 'block';
+                emailSection.classList.remove('hidden');
+            }, 400);
         });
 
         form.addEventListener('submit', function(e) {
@@ -398,11 +411,16 @@
             
             // Show success message
             additionalInfo.classList.remove('show');
-            successMessage.classList.add('show');
+            setTimeout(() => {
+                additionalInfo.style.display = 'none';
+                emailSection.style.display = 'block';
+                emailSection.classList.remove('hidden');
+                successMessage.classList.add('show');
+            }, 400);
             
             // Reset form
             form.reset();
-            emailSection.style.display = 'block';
+            emailSection.classList.remove('hidden');
             
             // Hide success message after 5 seconds
             setTimeout(() => {
