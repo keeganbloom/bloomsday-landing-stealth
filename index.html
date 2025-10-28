@@ -312,22 +312,22 @@
 
                     <div class="input-group">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your full name" required>
+                        <input type="text" id="name" name="name" placeholder="First Last" required>
                     </div>
 
                     <div class="input-group">
                         <label for="title">Title</label>
-                        <input type="text" id="title" name="title" placeholder="Your job title" required>
+                        <input type="text" id="title" name="title" placeholder="Your job title (optional)">
                     </div>
 
                     <div class="input-group">
                         <label for="company">Firm or Company Name</label>
-                        <input type="text" id="company" name="company" placeholder="Company name" required>
+                        <input type="text" id="company" name="company" placeholder="Company name (optional)">
                     </div>
 
                     <div class="input-group">
                         <label for="companyUrl">Company URL</label>
-                        <input type="url" id="companyUrl" name="companyUrl" placeholder="https://example.com">
+                        <input type="url" id="companyUrl" name="companyUrl" placeholder="https://example.com (optional)">
                     </div>
 
                     <div class="input-group">
@@ -393,7 +393,7 @@
                 </div>
                 
                 <div class="success-message" id="successMessage">
-                    🎉 Thanks for signing up! We'll be in touch soon.
+                    🎉 Submission received.  Welcome!
                 </div>
             </form>
         </div>
@@ -458,7 +458,7 @@ form.addEventListener('submit', async function(e) {
         
         const data = await response.json();
         
-        if (data.success) {
+        if (response.ok || data.success) {
             // Show success message with fade effect
             step2.style.opacity = '0';
             setTimeout(() => {
