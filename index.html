@@ -450,6 +450,9 @@ form.addEventListener('submit', async function(e) {
     // Make sure the email from step 1 is included
     formData.set('email', emailInput.value);
     
+    // Remove the emailDisplay field - it's just for show
+    formData.delete('emailDisplay');
+    
     try {
         const response = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
@@ -458,7 +461,10 @@ form.addEventListener('submit', async function(e) {
         
         const data = await response.json();
         
-        if (response.ok || data.success) {
+        // Log the response for debugging
+        console.log('Web3Forms response:', data);
+        
+        if (response.ok && data.success) {
             // Show success message with fade effect
             step2.style.opacity = '0';
             setTimeout(() => {
