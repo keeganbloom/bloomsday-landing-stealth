@@ -173,29 +173,6 @@
             transform: translateY(-2px);
         }
 
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-            cursor: pointer;
-            accent-color: #4caf50;
-        }
-
-        .checkbox-label {
-            color: #555;
-            font-size: 0.95rem;
-            cursor: pointer;
-            user-select: none;
-        }
-
         button {
             width: 100%;
             padding: 1.1rem;
@@ -219,6 +196,11 @@
             transform: translateY(0);
         }
 
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         .back-button {
             background: #f5f5f5;
             color: #555;
@@ -235,9 +217,9 @@
             display: none;
             background: #4caf50;
             color: white;
-            padding: 1rem;
+            padding: 2rem;
             border-radius: 12px;
-            margin-top: 1rem;
+            font-size: 1.2rem;
             animation: slideDown 0.5s ease-out;
         }
 
@@ -263,6 +245,10 @@
             opacity: 0.8;
         }
 
+        #formFrame {
+            display: none;
+        }
+
         @media (max-width: 640px) {
             .logo {
                 font-size: 3rem;
@@ -281,14 +267,14 @@
 <body>
     <div class="container">
         <h1 class="logo">Bloomsday</h1>
-        <p class="tagline">For the next generation of lawyers.</p>
-        
+        <p class="tagline">For the next generation of lawyers</p>
         
         <div class="form-container">
             <h2 class="form-title">Request an Early Invite</h2>
-            <form id="signupForm" action="https://api.web3forms.com/submit" method="POST">
+            <form id="signupForm" action="https://api.web3forms.com/submit" method="POST" target="formFrame">
                 <input type="hidden" name="access_key" value="676932c1-200e-453d-825f-8c95776882d3">
-                <input type="hidden" name="redirect" value="https://bloomsday.co">
+                <input type="hidden" name="subject" value="New Bloomsday Early Invite Request">
+                <input type="hidden" name="from_name" value="Bloomsday Website">
                 
                 <!-- Step 1: Email -->
                 <div id="step1" class="form-step active">
@@ -297,7 +283,6 @@
                         <input type="email" id="email" name="email" placeholder="you@example.com" required>
                     </div>
                     
-                                      
                     <button type="button" id="continueBtn">Continue</button>
                 </div>
 
@@ -307,7 +292,7 @@
                     
                     <div class="input-group">
                         <label for="emailDisplay">Email Address</label>
-                        <input type="email" id="emailDisplay" name="emailDisplay" readonly>
+                        <input type="email" id="emailDisplay" readonly>
                     </div>
 
                     <div class="input-group">
@@ -389,11 +374,11 @@
                         </select>
                     </div>
                     
-                    <button type="submit">Submit</button>
+                    <button type="submit" id="submitBtn">Submit</button>
                 </div>
                 
                 <div class="success-message" id="successMessage">
-                    🎉 Submission received.  Welcome!
+                    🎉 Submission received. Welcome!
                 </div>
             </form>
         </div>
@@ -403,105 +388,72 @@
         </div>
     </div>
 
+    <iframe name="formFrame" id="formFrame"></iframe>
+
     <script>
         const form = document.getElementById('signupForm');
-const step1 = document.getElementById('step1');
-const step2 = document.getElementById('step2');
-const continueBtn = document.getElementById('continueBtn');
-const backBtn = document.getElementById('backBtn');
-const emailInput = document.getElementById('email');
-const emailDisplay = document.getElementById('emailDisplay');
-const successMessage = document.getElementById('successMessage');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const continueBtn = document.getElementById('continueBtn');
+        const backBtn = document.getElementById('backBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const emailInput = document.getElementById('email');
+        const emailDisplay = document.getElementById('emailDisplay');
+        const successMessage = document.getElementById('successMessage');
 
-continueBtn.addEventListener('click', function() {
-    if (emailInput.validity.valid) {
-        // Fade out step 1
-        step1.style.opacity = '0';
-        setTimeout(() => {
-            step1.classList.remove('active');
-            emailDisplay.value = emailInput.value;
-            step2.classList.add('active');
-            setTimeout(() => {
-                step2.style.opacity = '1';
-            }, 50);
-        }, 500);
-    } else {
-        emailInput.reportValidity();
-    }
-});
-
-backBtn.addEventListener('click', function() {
-    // Fade out step 2
-    step2.style.opacity = '0';
-    setTimeout(() => {
-        step2.classList.remove('active');
-        step1.classList.add('active');
-        setTimeout(() => {
-            step1.style.opacity = '1';
-        }, 50);
-    }, 500);
-});
-
-form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    // Make sure the email from step 1 is in the form
-    emailInput.value = emailInput.value; // Ensure it's set
-    
-    // Remove the emailDisplay field before submission
-    const emailDisplayInput = document.getElementById('emailDisplay');
-    emailDisplayInput.removeAttribute('name');
-    
-    const formData = new FormData(form);
-    
-    // Submit using XMLHttpRequest instead of fetch to avoid CORS issues
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://api.web3forms.com/submit', true);
-    
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            try {
-                const response = JSON.parse(xhr.responseText);
-                console.log('Web3Forms response:', response);
-                
-                if (response.success) {
-                    // Show success message with fade effect
-                    step2.style.opacity = '0';
+        continueBtn.addEventListener('click', function() {
+            if (emailInput.validity.valid) {
+                step1.style.opacity = '0';
+                setTimeout(() => {
+                    step1.classList.remove('active');
+                    emailDisplay.value = emailInput.value;
+                    step2.classList.add('active');
                     setTimeout(() => {
-                        step2.classList.remove('active');
-                        successMessage.classList.add('show');
-                        
-                        // Reset form after a delay
-                        setTimeout(() => {
-                            form.reset();
-                            emailDisplayInput.setAttribute('name', 'emailDisplay');
-                            successMessage.classList.remove('show');
-                            step1.classList.add('active');
-                            setTimeout(() => {
-                                step1.style.opacity = '1';
-                            }, 50);
-                        }, 5000);
-                    }, 500);
-                } else {
-                    alert('Something went wrong. Please try again.');
-                }
-            } catch (e) {
-                console.error('Parse error:', e);
-                alert('Something went wrong. Please try again.');
+                        step2.style.opacity = '1';
+                    }, 50);
+                }, 500);
+            } else {
+                emailInput.reportValidity();
             }
-        } else {
-            console.error('HTTP Error:', xhr.status);
-            alert('Something went wrong. Please try again.');
-        }
-    };
-    
-    xhr.onerror = function() {
-        console.error('Network error');
-        alert('Something went wrong. Please try again.');
-    };
-    
-    xhr.send(formData);
-});
+        });
+
+        backBtn.addEventListener('click', function() {
+            step2.style.opacity = '0';
+            setTimeout(() => {
+                step2.classList.remove('active');
+                step1.classList.add('active');
+                setTimeout(() => {
+                    step1.style.opacity = '1';
+                }, 50);
+            }, 500);
+        });
+
+        form.addEventListener('submit', function(e) {
+            // Disable submit button to prevent double submission
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            // Show success after a short delay (form submits to iframe in background)
+            setTimeout(() => {
+                step2.style.opacity = '0';
+                setTimeout(() => {
+                    step2.classList.remove('active');
+                    successMessage.classList.add('show');
+                    
+                    // Reset form after delay
+                    setTimeout(() => {
+                        form.reset();
+                        successMessage.classList.remove('show');
+                        step1.classList.add('active');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit';
+                        setTimeout(() => {
+                            step1.style.opacity = '1';
+                        }, 50);
+                    }, 5000);
+                }, 500);
+            }, 1000);
+        });
     </script>
 </body>
 </html>
